@@ -4,6 +4,7 @@ import Footer from '../components/Footer.vue';
 import Modal from '../components/Modal.vue';
 import { provide, ref } from 'vue';
 import Card from '../components/Card.vue';
+import Footerv3 from '@/components/Footerv3.vue';
 
 const currentModalContentComponent = ref({});
 const setModalContent = (component) => {
@@ -21,6 +22,6 @@ provide('setModalContent', setModalContent);
   </ClientOnly>
     <RouterView />
   <ClientOnly>
-    <Footer></Footer>
+    <Footerv3/>
   </ClientOnly>
 </template>

@@ -33,6 +33,6 @@ console.log(project)
 
 <style>
 #app{
-    background: #171411; 
+    background: var(--bg-color); 
 }
 </style>

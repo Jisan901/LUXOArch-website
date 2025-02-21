@@ -21,7 +21,7 @@ onMounted(async (e) => {
 
 
 <template>
-    <section class="py-12 bg-[#171411] text-gray-100  pt-24">
+    <section class="py-12 bg-[var(--bg-color)] text-gray-100  pt-24">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="max-w-xl mx-auto text-center xl:max-w-2xl">
                 <h2 class="text-3xl font-bold leading-tight text-gray-50 sm:text-4xl xl:text-5xl mb-6">What we Offer?

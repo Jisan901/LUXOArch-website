@@ -1,5 +1,5 @@
 <template>
-    <section class="min-h-screen  pt-[68px] w-full bg-[#171411]">
+    <section class="min-h-screen  pt-[68px] w-full bg-[var(--bg-color)]">
         <Loading v-if="isLoading" />
         <div v-else class="w-full">
         <div class="w-full">

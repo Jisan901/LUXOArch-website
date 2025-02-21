@@ -5,7 +5,6 @@ const route = useRoute()
 const isLightTheme = false
 import logo1 from '@/assets/logo.png'
 import logo2 from '@/assets/logo-tr.png'
-import { MapPinIcon,  } from '@heroicons/vue/24/outline';
 
 const logo = ref(logo1)
 watch(isLightTheme, () => {
@@ -25,49 +24,17 @@ watch(isLightTheme, () => {
 
   <footer class="footer footer-center p-10"
     :class="{ 'bg-white text-black': isLightTheme, 'bg-[#171411] text-white': !isLightTheme }">
-   
-    <div class="bg-transparent text-white p-6 md:p-8 rounded-lg flex flex-col md:flex-row w-full max-w-4xl mx-auto">
-        <!-- Contact Info -->
-        <div class="flex-1 space-y-4">
-            <div class="flex items-center space-x-3 md:text-left">
-                <span class="text-gray-400"><MapPinIcon class="h-6 w-6"/></span>
-                <div>
-                    <p class="text-sm">12 Gratwick Mews, Edmondson Park</p>
-                    <p class="font-bold">NSW 2174, Australia</p>
-                </div>
-            </div>
-
-            <div class="flex items-center space-x-3">
-                <span class="text-gray-400">📞</span>
-                <p class="font-bold">0426 235 095</p>
-            </div>
-
-            <div class="flex items-center space-x-3">
-                <span class="text-gray-400"><svg class="fill-none stroke-current" width="24" height="24" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M4 18L9 12M20 18L15 12M3 8L10.225 12.8166C10.8665 13.2443 11.1872 13.4582 11.5339 13.5412C11.8403 13.6147 12.1597 13.6147 12.4661 13.5412C12.8128 13.4582 13.1335 13.2443 13.775 12.8166L21 8M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19Z"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </svg></span>
-                <a href="mailto:info@luxoarch.com.au" class="text-blue-400 hover:underline">
-                  info@luxoarch.com.au
-                </a>
-            </div>
-        </div>
-
-        <!-- About the company -->
-        <div class="flex-1 mt-6 md:mt-0 md:ml-8 md:text-left max-w-64">
-          <img :src="logo" alt="logo" class="w-14 h-14 mx-auto md:mx-0" />
-      <p class="font-bold mt-1">
+    <aside>
+      <img :src="logo" alt="logo" class="w-14 h-14" />
+      <p class="font-bold">
         LuxoArch Design & Studio Pty Ltd.
+        <br />
+        Providing reliable design.
       </p>
-            <p class="text-gray-400 text-sm mt-2">
-              Australian-based firm offering complete building design and engineering services for residential projects.
-            </p>
-
-            <!-- Social Media Icons -->
-            <nav>
-      <div class="grid grid-cols-3 gap-4 max-w-24 mt-2 mx-auto md:mx-0">
+      <p>Copyright © {{ new Date().getFullYear() }} LuxoArch Design & Studio<br /> ABN 67 373 843 627</p>
+    </aside>
+    <nav>
+      <div class="grid grid-flow-col gap-4">
         <a>
           <svg class="fill-current" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -96,9 +63,5 @@ watch(isLightTheme, () => {
       </div>
       <RouterLink class="btn btn-primary text-gray-950 btn-sm mt-4" to="/contact">Get in touch</RouterLink>
     </nav>
-        </div>
-    </div>
-    <p>Copyright © {{ new Date().getFullYear() }} LuxoArch Design & Studio<br /> ABN 67 373 843 627</p>
   </footer>
-
 </template>

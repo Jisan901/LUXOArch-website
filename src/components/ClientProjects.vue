@@ -1,5 +1,5 @@
 <template>
-  <section class="container mx-auto px-4 py-8 pt-[68px] bg-[#171411] text-neutral-content">
+  <section class="container mx-auto px-4 py-8 pt-[68px] bg-[var(--bg-color)] text-neutral-content">
     <h2 class="text-4xl border-b-4 border-primary inline-block">Projects</h2>
     <Loading v-if="isLoading" />
     <div v-else class="grid lg:grid-cols-3 grid-cols-1 gap-6 w-full min-h-screen mt-4">

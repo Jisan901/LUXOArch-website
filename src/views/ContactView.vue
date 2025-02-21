@@ -10,7 +10,7 @@ function sendFormData(e) {
   isSending.value = true
   const form = e.target
   const user = form.name.value
-  const postcode = form.postcode.value
+  const postcode = 'form.postcode.value'
   const email = form.email.value
   const message = form.message.value
   const phone = form.phone.value
@@ -58,15 +58,15 @@ function sendFormData(e) {
 </script>
 
 <template>
-  <section class="text-gray-400 bg-[#171411] body-font relative">
+  <section class="text-gray-400 bg-[var(--bg-color)] body-font relative">
     <div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
       <div
-        class="lg:w-2/3 md:w-1/2 bg-[#171411] rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
+        class="lg:w-2/3 md:w-1/2 bg-[var(--bg-color)] rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
         <iframe width="100%" height="100%" title="map" class="absolute inset-0" frameborder="0" marginheight="0"
           marginwidth="0" scrolling="no"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.777326569421!2d151.0344867748133!3d-33.92113012176962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12bd588a283095%3A0x76720e4cb927cff8!2sLuxoarch%20Design%20%26%20Studio!5e0!3m2!1sen!2sbd!4v1735184927575!5m2!1sen!2sbd"
           style="filter: grayscale(1) contrast(1.2) opacity(0.16);"></iframe>
-        <div class="bg-[#171411] relative flex flex-wrap py-6 rounded shadow-md">
+        <div class="bg-[var(--bg-color)] relative flex flex-wrap py-6 rounded shadow-md">
           <div class="lg:w-1/2 px-6">
             <h2 class="title-font font-semibold text-white tracking-widest text-xs">ADDRESS</h2>
             <p class="mt-1">12 Gratwick Mews, Edmondson Park, NSW 2174, Australia</p>
@@ -99,11 +99,11 @@ function sendFormData(e) {
           <input required type="email" id="email" name="email" placeholder="Enter your Email"
             class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
         </div>
-        <div class="relative mb-4">
+        <!-- <div class="relative mb-4">
           <label for="name" class="leading-7 text-sm text-gray-400">POST CODE</label>
           <input required type="text" id="postcode" name="postcode" placeholder="Enter your POST code"
             class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-        </div>
+        </div> -->
         <div class="relative mb-4">
           <label for="message" class="leading-7 text-sm text-gray-400">Message</label>
           <textarea required id="message" name="message"
