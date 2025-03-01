@@ -5,7 +5,7 @@
     <div v-else class="grid lg:grid-cols-3 grid-cols-1 gap-6 w-full min-h-screen mt-4">
       <template v-for="project in projects">
         <div>
-        <div v-if="project.title" className="card bg-transparent max-w-96 mx-auto bg-base-100 shadow-lg">
+        <div v-if="project.title" className="card bg-transparent max-w-96 mx-auto bg-base-100 shadow-lg shadow-gray-900">
           <figure className="px-10 pt-10">
               <Carousel :banners="project.banners"></Carousel>
           </figure>

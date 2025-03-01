@@ -707,7 +707,7 @@ const _sfc_main$k = {
         ssrRenderList(unref(projects), (project) => {
           _push(`<div>`);
           if (project.title) {
-            _push(`<div className="card bg-transparent max-w-96 mx-auto bg-base-100 shadow-lg"><figure className="px-10 pt-10">`);
+            _push(`<div className="card bg-transparent max-w-96 mx-auto bg-base-100 shadow-lg shadow-gray-900"><figure className="px-10 pt-10">`);
             _push(ssrRenderComponent(_sfc_main$x, {
               banners: project.banners
             }, null, _parent));
@@ -1070,7 +1070,7 @@ const _sfc_main$b = /* @__PURE__ */ defineComponent({
   __ssrInlineRender: true,
   setup(__props) {
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ className: "drawer lg:drawer-open" }, _attrs))}><input id="main-drawer" type="checkbox" className="drawer-toggle"><div className="z-[0] drawer-content overflow-x-auto flex flex-col w-[calc(100% - 256px)]">`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ className: "drawer lg:drawer-open" }, _attrs))}><input id="main-drawer" type="checkbox" className="drawer-toggle"><div className="z-[0] drawer-content overflow-x-auto flex flex-col w-[calc(100% - 256px)] bg-white">`);
       ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
       _push(`</div><div className="drawer-side"><label htmlFor="main-drawer" className="drawer-overlay"></label><ul className="z-[1] menu menu-hover-none p-4 w-64 h-full bg-base-200 text-base-content justify-between">`);
       _push(ssrRenderComponent(_sfc_main$c, null, null, _parent));
@@ -1358,7 +1358,10 @@ const _sfc_main$3 = {
     const defaultData = getProjectById(updateId);
     useRouter();
     const uploadImagesToSupabase = async (files, info, core, uploadHandler) => {
-      if (!files.length) return;
+      if (!files.length) {
+        uploadHandler({ result: [] });
+        return;
+      }
       const uploadedFiles = [];
       for (const file of files) {
         const filePath = `uploads/${Date.now()}_${file.name}`;
@@ -1423,13 +1426,13 @@ const _sfc_main$3 = {
     });
     return (_ctx, _push, _parent, _attrs) => {
       var _a, _b, _c;
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full" }, _attrs))} data-v-0387e56d><div class="my-7 mx-6 flex justify-between items-center" data-v-0387e56d><h1 class="text-4xl font-bold" data-v-0387e56d>Editor</h1></div><form class="m-6 rounded-lg flex flex-col" data-v-0387e56d><input${ssrRenderAttr("value", (_a = unref(defaultData)) == null ? void 0 : _a.title)} required type="text" placeholder="Title" class="input input-bordered w-full my-4" name="title" data-v-0387e56d><textarea required class="textarea textarea-bordered w-full" placeholder="Small description for card" name="description" data-v-0387e56d>${ssrInterpolate((_b = unref(defaultData)) == null ? void 0 : _b.description)}</textarea>`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full" }, _attrs))} data-v-1a159d78><div class="my-7 mx-6 flex justify-between items-center" data-v-1a159d78><h1 class="text-4xl font-bold" data-v-1a159d78>Editor</h1></div><form class="m-6 rounded-lg flex flex-col" data-v-1a159d78><input${ssrRenderAttr("value", (_a = unref(defaultData)) == null ? void 0 : _a.title)} required type="text" placeholder="Title" class="input input-bordered w-full my-4" name="title" data-v-1a159d78><textarea required class="textarea textarea-bordered w-full" placeholder="Small description for card" name="description" data-v-1a159d78>${ssrInterpolate((_b = unref(defaultData)) == null ? void 0 : _b.description)}</textarea>`);
       if (unref(updateId)) {
-        _push(`<img title="previous banner" class="w-40 my-4"${ssrRenderAttr("src", (_c = unref(defaultData)) == null ? void 0 : _c.banners[0])} alt="bnner" data-v-0387e56d>`);
+        _push(`<img title="previous banner" class="w-40 my-4"${ssrRenderAttr("src", (_c = unref(defaultData)) == null ? void 0 : _c.banners[0])} alt="bnner" data-v-1a159d78>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<label class="form-control w-full max-w-xs mb-4" data-v-0387e56d><div class="label" data-v-0387e56d><span class="label-text" data-v-0387e56d>Pick a file for banner</span></div><input${ssrIncludeBooleanAttr(!unref(updateId)) ? " required" : ""} multiple type="file" class="file-input file-input-bordered w-full" name="banner" data-v-0387e56d></label><div id="editor" data-v-0387e56d></div><button${ssrIncludeBooleanAttr(isLoading.value) ? " disabled" : ""} type="submit" class="btn btn-primary btn-sm max-w-20 my-6" data-v-0387e56d>${ssrInterpolate(unref(updateId) ? "Update" : "Post")}</button></form></div>`);
+      _push(`<label class="form-control w-full max-w-xs mb-4" data-v-1a159d78><div class="label" data-v-1a159d78><span class="label-text" data-v-1a159d78>Pick a file for banner</span></div><input multiple type="file" class="file-input file-input-bordered w-full" name="banner" data-v-1a159d78></label><label class="form-control hidden w-full max-w-xs mb-4" data-v-1a159d78><div class="label" data-v-1a159d78><span class="label-text" data-v-1a159d78>Do not add anything on that field</span></div><input disabled placeholder="urls,urls"${ssrRenderAttr("value", (unref(defaultData).banners ?? []).join(","))} type="text" class="input input-bordered w-full" name="bannersurl" data-v-1a159d78></label><div id="editor" data-v-1a159d78></div><button${ssrIncludeBooleanAttr(isLoading.value) ? " disabled" : ""} type="submit" class="btn btn-primary btn-sm max-w-20 my-6" data-v-1a159d78>${ssrInterpolate(unref(updateId) ? "Update" : "Post")}</button></form></div>`);
     };
   }
 };
@@ -1439,7 +1442,7 @@ _sfc_main$3.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/views/Dashboard/ProjectsForm.vue");
   return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
 };
-const ProjectsForm = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-0387e56d"]]);
+const ProjectsForm = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-1a159d78"]]);
 const _sfc_main$2 = {
   __name: "ResetPass",
   __ssrInlineRender: true,

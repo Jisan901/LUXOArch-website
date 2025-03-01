@@ -6,7 +6,7 @@ import Top from './Drawer/Top.vue';
 <template>
     <div className="drawer lg:drawer-open">
         <input id="main-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="z-[0] drawer-content overflow-x-auto flex flex-col w-[calc(100% - 256px)]">
+        <div className="z-[0] drawer-content overflow-x-auto flex flex-col w-[calc(100% - 256px)] bg-white">
             <slot></slot>
         </div>
         <div className="drawer-side">

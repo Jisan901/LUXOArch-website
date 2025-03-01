@@ -28,7 +28,8 @@ function navigateToBack() {
 
 
 const uploadImagesToSupabase = async (files, info, core, uploadHandler) => {
-  if (!files.length) return;
+  if (!files.length) { uploadHandler({result:[]}); return};
+
 
   const uploadedFiles = [];
 
@@ -94,6 +95,7 @@ onUnmounted(()=>{
 
 const handleSubmit = (e)=>{
   isLoading.value = true
+  const split_urls = e.target.bannersurl.value.split(',');
   const data = {
     title:(e.target.title.value),
     description:(e.target.description.value),
@@ -102,8 +104,8 @@ const handleSubmit = (e)=>{
     // it is doing its best
     uploadImagesToSupabase(e.target.banner.files, null, null,({result})=>{
         data.banners = result.map(file => file.url);
-        if(data.banners.length===0) delete data.banners
-        else data.banners = [...new Set([...data.banners, ...(defaultData.banners??[])])] // merge previous banners
+        //if(data.banners.length===0) delete data.banners
+        data.banners = [...new Set([...data.banners, ...(defaultData.banners??[]), ...split_urls])] // merge previous banners
         if (updateId) {
           updateProject(updateId,data)
           isLoading.value=false
@@ -155,7 +157,13 @@ async function addProject(fdata) {
                 <div class="label">
                     <span class="label-text">Pick a file for banner</span>
                 </div>
-                <input :required="!updateId" multiple type="file" class="file-input  file-input-bordered w-full" name="banner" />
+                <input multiple type="file" class="file-input  file-input-bordered w-full" name="banner" />
+            </label>
+            <label class="form-control hidden w-full max-w-xs mb-4">
+                <div class="label">
+                    <span class="label-text">Do not add anything on that field</span>
+                </div>
+                <input disabled  placeholder="urls,urls" :value="(defaultData.banners??[]).join(',')" type="text" class="input input-bordered w-full" name="bannersurl" />
             </label>
             <div id="editor"></div>
             <button :disabled="isLoading" type="submit" class="btn btn-primary btn-sm max-w-20 my-6">{{updateId?"Update":"Post"}}</button>
