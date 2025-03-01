@@ -13,7 +13,7 @@ onMounted(() => {
         <video autoplay="1" id="video" muted loop playsinline="1" class="video" src="../assets/vid.mp4">
         </video>
         <div
-          class="p-6 w-full min-h-screen flex items-center flex-col justify-center bg-[rgba(0,0,0,0.3)] pt-32 text-center">
+          class="p-6 w-full min-h-screen flex items-center flex-col justify-center bg-[rgba(0,0,0,0.5)] pt-32 text-center">
           <span class="text-yellow-500">Your Vision, Our Expertise</span>
           <h1 class="text-5xl text-white font-bold">Design Your Dream Home<br /> <span class="text-yellow-500">With LuxoArch</span></h1>
           <p class="py-6 text-white block lg:w-1/2 mx-auto">
