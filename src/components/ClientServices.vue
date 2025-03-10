@@ -1,56 +1,86 @@
 <script setup>
-import papaparse from 'papaparse';
-import { onMounted, ref } from 'vue';
-import Loading from './Loading.vue';
+import papaparse from "papaparse";
+import { onMounted, ref } from "vue";
+import Loading from "./Loading.vue";
 
-const services = ref([])
-
+// Store services data
+const services = ref([]);
 const isLoading = ref(true);
-onMounted(async (e) => {
-    const fileUrl = 'https://luxoarch.github.io/assets/services.csv'
-    const res = await fetch(fileUrl)
-    const data = await res.text()
-    const parsed = papaparse.parse(data, { header: true })
-    services.value = parsed.data
-    isLoading.value = false;
 
-})
+// Manually Map Icons to Services (If Not in CSV)
+const serviceIcons = {
+  "Initial Consultation": "/icons/consultation.svg",
+  "Residential Architectural Design": "/icons/architecture.svg",
+  "Planning Approvals (DA/CDC Approvals)": "/icons/approval.svg",
+  "Collaboration with Consultants": "/icons/collaboration.svg",
+  "Alterations & Extensions Design & Approval": "/icons/alterations.svg",
+  "Granny Flat Design & Swimming Pool Approval": "/icons/pool.svg",
+};
 
+onMounted(async () => {
+  const fileUrl = "https://luxoarch.github.io/assets/services.csv";
+  const res = await fetch(fileUrl);
+  const data = await res.text();
+  const parsed = papaparse.parse(data, { header: true });
 
+  services.value = parsed.data
+    .filter((service) => service.service) // Ensure valid data
+    .map((service) => ({
+      ...service,
+      icon: service.icon || serviceIcons[service.service] || "/icons/default.svg", // Fallback icon
+    }));
+
+  isLoading.value = false;
+});
 </script>
 
-
 <template>
-    <section class="py-12 bg-[var(--bg-color)] text-gray-100  pt-24">
-        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="max-w-xl mx-auto text-center xl:max-w-2xl">
-                <h2 class="text-3xl font-bold leading-tight text-gray-50 sm:text-4xl xl:text-5xl mb-6">What we Offer?
-                </h2>
-                <p class="mb-4">We are provide complete solution on design and architecture that helps you be more
-                    productive and efficient when building
-                    your dream.</p>
+  <section class="py-20 bg-[#171411] text-gray-100">
+    <div class="container mx-auto px-6 lg:px-16">
+      <!-- Section Title -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-white sm:text-5xl">What We Offer?</h2>
+        <p class="mt-4 text-lg text-gray-300 max-w-3xl mx-auto">
+          We provide a complete solution for design and architecture, making your home-building experience smooth and efficient.
+        </p>
+      </div>
 
-            </div>
-            <Loading v-if="isLoading" />
-            <div v-else
-                class="grid max-w-4xl lg:max-w-6xl grid-cols-1 mx-auto mt-8 text-center gap-y-4 sm:gap-x-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-12 lg:mt-20 sm:text-left">
-                <div v-for="service in services" class="relative">
-                    <template v-if="service.service">
-                        <div class="absolute -inset-1">
-                            <div
-                                class="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600">
-                            </div>
-                        </div>
-                        <div class="relative overflow-hidden bg-white shadow-md rounded-xl h-full">
-                            <div class="p-9"><img class="w-12 h-12 mx-auto text-gray-400 sm:mx-0" :src="service.icon"
-                                    alt="icon">
-                                <h3 class="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">{{ service.service }}</h3>
-                                <p class="mt-6 text-base text-gray-600">{{ service.description }}</p>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-            </div>
+      <!-- Loading Indicator -->
+      <Loading v-if="isLoading" />
+
+      <!-- Services Grid -->
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          v-for="service in services"
+          :key="service.service"
+          class="relative bg-white rounded-xl shadow-lg p-8 transition-all duration-300 group overflow-hidden hover:shadow-2xl"
+        >
+          <!-- Hover Gradient Overlay -->
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-yellow-500/20 via-pink-500/20 to-green-500/20 opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-0"
+          ></div>
+
+          <!-- Content (Placed above hover effect) -->
+          <div class="relative z-10 flex flex-col items-center text-center space-y-4">
+            <!-- Icon -->
+            <img
+              :src="service.icon"
+              alt="service-icon"
+              class="w-14 h-14 object-contain"
+            />
+
+            <!-- Service Title -->
+            <h3 class="text-2xl font-bold text-gray-900">
+              {{ service.service }}
+            </h3>
+
+            <!-- Description -->
+            <p class="text-base text-gray-600 leading-relaxed">
+              {{ service.description }}
+            </p>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </template>

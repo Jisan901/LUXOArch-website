@@ -1,6 +1,6 @@
-import { useSSRContext, ref, computed, watch, mergeProps, unref, withCtx, createTextVNode, createVNode, onMounted, provide, resolveComponent, defineComponent, inject, toDisplayString, openBlock, createBlock, createCommentVNode, renderSlot, onUnmounted } from "vue";
+import { ref, computed, watch, mergeProps, unref, withCtx, createTextVNode, createVNode, useSSRContext, onMounted, provide, resolveComponent, inject, defineComponent, toDisplayString, openBlock, createBlock, createCommentVNode, renderSlot, onUnmounted } from "vue";
 import { ssrRenderAttrs, ssrRenderStyle, ssrRenderClass, ssrRenderComponent, ssrRenderAttr, ssrRenderSlot, ssrInterpolate, ssrRenderList, ssrIncludeBooleanAttr, ssrLooseContain } from "vue/server-renderer";
-import { useRoute, RouterLink, useRouter } from "vue-router";
+import { useRoute, useRouter, RouterLink } from "vue-router";
 import { createClient } from "@supabase/supabase-js";
 import papaparse from "papaparse";
 import "@emailjs/browser";
@@ -10,27 +10,23 @@ import plugins from "suneditor/src/plugins/index.js";
 import { ViteSSG } from "vite-ssg";
 const logo1 = "/assets/logo-mr0mzXuV.png";
 const logo2 = "/assets/logo-tr-DXpNGKKd.png";
-const _export_sfc = (sfc, props) => {
-  const target = sfc.__vccOpts || sfc;
-  for (const [key, val] of props) {
-    target[key] = val;
-  }
-  return target;
-};
-const _sfc_main$z = {
+const _sfc_main$y = {
   __name: "Navigation",
   __ssrInlineRender: true,
   setup(__props) {
     const logo = ref(logo1);
     const route = useRoute();
+    useRouter();
+    const isMenuOpen = ref(false);
     const navStyle = ref({
       backgroundColor: "rgba(0, 0, 0, 0.4)",
       backdropFilter: "blur(10px)",
       display: "flex",
       justifyContent: "space-between"
-      /* padding: 1rem 2rem; */
     });
-    const isLightTheme2 = computed(() => route.fullPath === "/at" || route.fullPath === "/prcts");
+    const isLightTheme2 = computed(
+      () => route.fullPath === "/at" || route.fullPath === "/prcts"
+    );
     watch(isLightTheme2, () => {
       if (isLightTheme2.value) {
         logo.value = logo2;
@@ -50,11 +46,15 @@ const _sfc_main$z = {
         };
       }
     });
+    const closeMenu = () => {
+      isMenuOpen.value = false;
+    };
+    watch(route, closeMenu);
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full flex justify-center items-center" }, _attrs))} data-v-29ba780f><div class="navbar fixed top-4 z-10 shadow-lg lg:rounded-full lg:w-[85%] mx-auto" style="${ssrRenderStyle(navStyle.value)}" data-v-29ba780f><div class="navbar-start" data-v-29ba780f><div class="dropdown" data-v-29ba780f><div tabindex="0" role="button" class="${ssrRenderClass([{ "text-black": isLightTheme2.value, "text-white": !isLightTheme2.value }, "btn btn-ghost lg:hidden"])}" data-v-29ba780f><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-v-29ba780f><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" data-v-29ba780f></path></svg></div><ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow" data-v-29ba780f><li data-v-29ba780f>`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full flex justify-center items-center" }, _attrs))}><div class="navbar fixed top-4 z-10 shadow-lg lg:rounded-full lg:w-[85%] mx-auto" style="${ssrRenderStyle(navStyle.value)}"><div class="navbar-start"><div class="dropdown"><div tabindex="0" role="button" class="${ssrRenderClass([{ "text-black": isLightTheme2.value, "text-white": !isLightTheme2.value }, "btn btn-ghost lg:hidden"])}"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path></svg></div><ul style="${ssrRenderStyle(isMenuOpen.value ? null : { display: "none" })}" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        class: "",
-        to: "/"
+        to: "/",
+        onClick: closeMenu
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -67,10 +67,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        class: "",
-        to: "/about"
+        to: "/about",
+        onClick: closeMenu
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -83,10 +83,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        class: "",
-        to: "/services"
+        to: "/services",
+        onClick: closeMenu
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -99,10 +99,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        class: "",
-        to: "/projects"
+        to: "/projects",
+        onClick: closeMenu
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -115,10 +115,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        class: "",
-        to: "/contact"
+        to: "/contact",
+        onClick: closeMenu
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -138,7 +138,7 @@ const _sfc_main$z = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img${ssrRenderAttr("src", logo.value)} class="h-12 w-12" alt="logo" data-v-29ba780f${_scopeId}><div class="flex flex-col justify-start ml-2 font-bold" data-v-29ba780f${_scopeId}><span class="text-lg" data-v-29ba780f${_scopeId}>LuxoArch</span><span class="md:text-sm text-xs font-normal" data-v-29ba780f${_scopeId}>Design and Studio</span></div>`);
+            _push2(`<img${ssrRenderAttr("src", logo.value)} class="h-12 w-12" alt="logo"${_scopeId}><div class="flex flex-col justify-start ml-2 font-bold"${_scopeId}><span class="text-lg"${_scopeId}>LuxoArch</span><span class="md:text-sm text-xs font-normal"${_scopeId}>Design and Studio</span></div>`);
           } else {
             return [
               createVNode("img", {
@@ -155,7 +155,7 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</div><div class="navbar-end" data-v-29ba780f><div class="navbar-center hidden lg:flex" data-v-29ba780f><ul class="${ssrRenderClass([{ "text-black": isLightTheme2.value, "text-white": !isLightTheme2.value }, "menu menu-horizontal px-1"])}" data-v-29ba780f><li data-v-29ba780f>`);
+      _push(`</div><div class="navbar-end"><div class="navbar-center hidden lg:flex"><ul class="${ssrRenderClass([{ "text-black": isLightTheme2.value, "text-white": !isLightTheme2.value }, "menu menu-horizontal px-1"])}"><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
         to: "/",
         "exact-active-class": "text-primary focus:text-primary"
@@ -171,10 +171,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        "active-class": "text-primary focus:text-primary",
-        to: "/about"
+        to: "/about",
+        "active-class": "text-primary focus:text-primary"
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -187,10 +187,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        "active-class": "text-primary focus:text-primary",
-        to: "/services"
+        to: "/services",
+        "active-class": "text-primary focus:text-primary"
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -203,10 +203,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        "active-class": "text-primary focus:text-primary",
-        to: "/projects"
+        to: "/projects",
+        "active-class": "text-primary focus:text-primary"
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -219,10 +219,10 @@ const _sfc_main$z = {
         }),
         _: 1
       }, _parent));
-      _push(`</li><li data-v-29ba780f>`);
+      _push(`</li><li>`);
       _push(ssrRenderComponent(unref(RouterLink), {
-        "active-class": "text-primary focus:text-primary",
-        to: "/contact"
+        to: "/contact",
+        "active-class": "text-primary focus:text-primary"
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -239,15 +239,21 @@ const _sfc_main$z = {
     };
   }
 };
-const _sfc_setup$z = _sfc_main$z.setup;
-_sfc_main$z.setup = (props, ctx) => {
+const _sfc_setup$y = _sfc_main$y.setup;
+_sfc_main$y.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/components/Navigation.vue");
-  return _sfc_setup$z ? _sfc_setup$z(props, ctx) : void 0;
+  return _sfc_setup$y ? _sfc_setup$y(props, ctx) : void 0;
 };
-const Navigation = /* @__PURE__ */ _export_sfc(_sfc_main$z, [["__scopeId", "data-v-29ba780f"]]);
-const _sfc_main$y = {};
-function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
+const _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+const _sfc_main$x = {};
+function _sfc_ssrRender$3(_ctx, _push, _parent, _attrs) {
   _push(`<dialog${ssrRenderAttrs(mergeProps({
     id: "my_modal_1",
     class: "modal"
@@ -255,14 +261,14 @@ function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
   ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</div><form method="dialog" class="modal-backdrop"><button>close</button></form></dialog>`);
 }
-const _sfc_setup$y = _sfc_main$y.setup;
-_sfc_main$y.setup = (props, ctx) => {
+const _sfc_setup$x = _sfc_main$x.setup;
+_sfc_main$x.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/components/Modal.vue");
-  return _sfc_setup$y ? _sfc_setup$y(props, ctx) : void 0;
+  return _sfc_setup$x ? _sfc_setup$x(props, ctx) : void 0;
 };
-const Modal = /* @__PURE__ */ _export_sfc(_sfc_main$y, [["ssrRender", _sfc_ssrRender$2]]);
-const _sfc_main$x = {
+const Modal = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["ssrRender", _sfc_ssrRender$3]]);
+const _sfc_main$w = {
   __name: "Carousel",
   __ssrInlineRender: true,
   props: ["banners"],
@@ -273,13 +279,13 @@ const _sfc_main$x = {
     };
   }
 };
-const _sfc_setup$x = _sfc_main$x.setup;
-_sfc_main$x.setup = (props, ctx) => {
+const _sfc_setup$w = _sfc_main$w.setup;
+_sfc_main$w.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/components/Carousel.vue");
-  return _sfc_setup$x ? _sfc_setup$x(props, ctx) : void 0;
+  return _sfc_setup$w ? _sfc_setup$w(props, ctx) : void 0;
 };
-const _sfc_main$w = {
+const _sfc_main$v = {
   __name: "Card",
   __ssrInlineRender: true,
   props: ["data"],
@@ -294,21 +300,21 @@ const _sfc_main$w = {
     });
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<div${ssrRenderAttrs(mergeProps({ className: "card bg-transparent  w-full mx-auto" }, _attrs))}><figure className="">`);
-      _push(ssrRenderComponent(_sfc_main$x, { banners: unref(banners) }, null, _parent));
+      _push(ssrRenderComponent(_sfc_main$w, { banners: unref(banners) }, null, _parent));
       _push(`</figure><div className="card-body items-center text-center"><h2 className="card-title">${ssrInterpolate(title.value)}</h2><p>${ssrInterpolate(description.value)}</p></div></div>`);
     };
   }
 };
-const _sfc_setup$w = _sfc_main$w.setup;
-_sfc_main$w.setup = (props, ctx) => {
+const _sfc_setup$v = _sfc_main$v.setup;
+_sfc_main$v.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/components/Card.vue");
-  return _sfc_setup$w ? _sfc_setup$w(props, ctx) : void 0;
+  return _sfc_setup$v ? _sfc_setup$v(props, ctx) : void 0;
 };
 const supabaseUrl = "https://mjgikfkirztqkkztiydu.supabase.co";
 const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qZ2lrZmtpcnp0cWtrenRpeWR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg1MDY5OTksImV4cCI6MjA1NDA4Mjk5OX0.5A7z9uPOTdSRLtuhLQvS789hR1ZOUtf1bfHbAtm_07Q";
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
-const _sfc_main$v = {
+const _sfc_main$u = {
   __name: "ProjectsProvider",
   __ssrInlineRender: true,
   setup(__props) {
@@ -354,13 +360,13 @@ const _sfc_main$v = {
     };
   }
 };
-const _sfc_setup$v = _sfc_main$v.setup;
-_sfc_main$v.setup = (props, ctx) => {
+const _sfc_setup$u = _sfc_main$u.setup;
+_sfc_main$u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/config/ProjectsProvider.vue");
-  return _sfc_setup$v ? _sfc_setup$v(props, ctx) : void 0;
+  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
 };
-const _sfc_main$u = {
+const _sfc_main$t = {
   __name: "App",
   __ssrInlineRender: true,
   setup(__props) {
@@ -371,7 +377,7 @@ const _sfc_main$u = {
     provide("setModalContent", setModalContent);
     return (_ctx, _push, _parent, _attrs) => {
       const _component_RouterView = resolveComponent("RouterView");
-      _push(ssrRenderComponent(_sfc_main$v, _attrs, {
+      _push(ssrRenderComponent(_sfc_main$u, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
             _push2(ssrRenderComponent(_component_RouterView, null, null, _parent2, _scopeId));
@@ -386,14 +392,14 @@ const _sfc_main$u = {
     };
   }
 };
-const _sfc_setup$u = _sfc_main$u.setup;
-_sfc_main$u.setup = (props, ctx) => {
+const _sfc_setup$t = _sfc_main$t.setup;
+_sfc_main$t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/App.vue");
-  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
+  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
 };
 const _imports_0$1 = "/assets/vid-BtlnDb_a.mp4";
-const _sfc_main$t = {
+const _sfc_main$s = {
   __name: "HomeView",
   __ssrInlineRender: true,
   setup(__props) {
@@ -422,86 +428,60 @@ const _sfc_main$t = {
     };
   }
 };
-const _sfc_setup$t = _sfc_main$t.setup;
-_sfc_main$t.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/views/HomeView.vue");
-  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
-};
-const HomeView = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["__scopeId", "data-v-a2455f25"]]);
-const _imports_0 = "/assets/07-DZYQnAh-.jpg";
-const _imports_1 = "/assets/01-Lti_uiJs.jpg";
-const _imports_2 = "/assets/FERDOUS-DDJDsexR.jpg";
-const _sfc_main$s = {
-  __name: "WhyTOItem",
-  __ssrInlineRender: true,
-  props: ["title"],
-  setup(__props) {
-    return (_ctx, _push, _parent, _attrs) => {
-      _push(`<li${ssrRenderAttrs(mergeProps({ class: "flex items-center lg:col-span-1" }, _attrs))}><div class="flex-shrink-0"><svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg></div><p class="ml-3 leading-5 text-sm text-gray-100">${ssrInterpolate(__props.title)}</p></li>`);
-    };
-  }
-};
 const _sfc_setup$s = _sfc_main$s.setup;
 _sfc_main$s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/components/WhyTOItem.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/views/HomeView.vue");
   return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
 };
-const _sfc_main$r = /* @__PURE__ */ defineComponent({
-  __name: "AboutView",
-  __ssrInlineRender: true,
-  setup(__props) {
-    return (_ctx, _push, _parent, _attrs) => {
-      const _component_RouterLink = resolveComponent("RouterLink");
-      _push(`<!--[--><div class="flex justify-center flex-col lg:flex-row px-4 lg:px-0 min-h-screen lg:h-screen pb-5 pt-[88px] bg-[var(--bg-color)]"><div class="w-full lg:w-[23%] h-full flex flex-col items-center justify-center"><img class="w-full h-[40%]"${ssrRenderAttr("src", _imports_0)} alt="about"><img class="w-full h-[40%] mt-2"${ssrRenderAttr("src", _imports_1)} alt="about"></div><div class="w-full lg:w-[25%] flex flex-col justify-evenly bg-[var(--bg-color)] p-4 overflow-scroll"><h1 class="text-4xl text-white">About us</h1><p class="text-white text-sm mt-4">LuxoArch Design and Studio is an Australian-based firm offering complete building design and engineering services for residential projects – Houses, Duplex, Townhouses, NDIS, Granny &amp; Extensions. We pride ourselves on being a true ‘onestop shop,’ guiding clients seamlessly through the entire process from initial design to final approval.</p><p class="text-white text-sm mt-4">Our team of experienced architects and engineers work collaboratively to deliver innovative and sustainable solutions tailored to each client&#39;s unique needs. We believe in creating spaces that are not only functional but also aesthetically pleasing, ensuring that every project we undertake is a true reflection of our client&#39;s vision and lifestyle.</p>`);
-      _push(ssrRenderComponent(_component_RouterLink, {
-        to: "/services",
-        class: "btn btn-primary mt-2 btn-outline hover:bg-yellow-500"
-      }, {
-        default: withCtx((_, _push2, _parent2, _scopeId) => {
-          if (_push2) {
-            _push2(`Our Services`);
-          } else {
-            return [
-              createTextVNode("Our Services")
-            ];
-          }
-        }),
-        _: 1
-      }, _parent));
-      _push(`</div><div class="w-full lg:w-[31%] h-full flex flex-col items-center justify-center"><img class="w-full h-[50%]"${ssrRenderAttr("src", _imports_2)} alt="about"><div class="w-full p-4"><span class="text-yellow-500 uppercase">Explore </span><h1 class="text-3xl text-base-200 font-bold">Our creation</h1><p class="text-1xl text-base-300"> Take a look on our projects to see the diverse range of projects we have successfully completed. </p>`);
-      _push(ssrRenderComponent(_component_RouterLink, {
-        to: "/allprojects",
-        class: "btn btn-primary bg-yellow-500 mt-2 uppercase"
-      }, {
-        default: withCtx((_, _push2, _parent2, _scopeId) => {
-          if (_push2) {
-            _push2(`Explore`);
-          } else {
-            return [
-              createTextVNode("Explore")
-            ];
-          }
-        }),
-        _: 1
-      }, _parent));
-      _push(`</div></div></div><div class="container mx-auto mt-6"><p class="text-base font-semibold leading-6 text-yellow-500 uppercase"> Why Choose </p><h4 class="mt-2 text-2xl font-extrabold leading-8 text-gray-100 sm:text-3xl sm:leading-9"> LuxoArch Design and Studio </h4><ul class="mt-8 space-y-3 font-medium">`);
-      _push(ssrRenderComponent(_sfc_main$s, { title: "Creative Excellence: We infuse creativity into every residential design, giving your home a uniqueand personal touch." }, null, _parent));
-      _push(ssrRenderComponent(_sfc_main$s, { title: "Residential Expertise: Our team specializes in crafting dream homes, making us your ideal partner for residential architectural design" }, null, _parent));
-      _push(ssrRenderComponent(_sfc_main$s, { title: "Attention to Detail: We leave no detail overlooked, ensuring your home is a masterpiece of craftsmanship." }, null, _parent));
-      _push(ssrRenderComponent(_sfc_main$s, { title: "Clear Communication: We prioritize open and transparent communication, keeping you informed and engaged throughout the design process." }, null, _parent));
-      _push(ssrRenderComponent(_sfc_main$s, { title: "Timely Delivery: We understand the importance of delivering your dream home on time, and we're committed to making that a reality" }, null, _parent));
-      _push(`</ul></div><!--]-->`);
-    };
-  }
-});
+const HomeView = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["__scopeId", "data-v-a2455f25"]]);
+const _imports_0 = "/assets/07-DZYQnAh-.jpg";
+const _imports_1 = "/assets/01-Lti_uiJs.jpg";
+const _imports_2 = "/assets/FERDOUS-DDJDsexR.jpg";
+const _sfc_main$r = {};
+function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
+  const _component_RouterLink = resolveComponent("RouterLink");
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "container mx-auto px-6 lg:px-16 py-20" }, _attrs))}><div class="flex flex-col lg:flex-row items-center justify-center gap-12"><div class="w-full lg:w-1/2 flex flex-col items-center space-y-6 lg:space-y-8"><img class="w-[90%] lg:w-full h-auto rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300"${ssrRenderAttr("src", _imports_0)} alt="about"><img class="w-[90%] lg:w-full h-auto rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300"${ssrRenderAttr("src", _imports_1)} alt="about"></div><div class="w-full lg:w-1/2 flex flex-col justify-center text-center lg:text-left space-y-6"><h1 class="text-5xl text-white font-extrabold mb-4">About Us</h1><p class="text-white text-lg leading-relaxed"> LuxoArch Design and Studio is an Australian-based firm offering <strong>complete building design and engineering services</strong> for residential projects – Houses, Duplex, Townhouses, NDIS, Granny &amp; Extensions. We pride ourselves on being a <strong>true ‘one-stop shop’</strong>, guiding clients from <strong>initial design to final approval</strong>. </p><p class="text-white text-lg leading-relaxed"> Our experienced <strong>architects and engineers</strong> work collaboratively to <strong>deliver innovative and sustainable solutions</strong> tailored to your needs. We create spaces that are <strong>functional, aesthetically pleasing, and a true reflection of your vision</strong>. </p>`);
+  _push(ssrRenderComponent(_component_RouterLink, {
+    to: "/services",
+    class: "mt-5 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-lg transition-all shadow-lg transform hover:scale-105"
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(` Our Services `);
+      } else {
+        return [
+          createTextVNode(" Our Services ")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`<div class="mt-8 bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-800"><h2 class="text-3xl text-yellow-500 font-semibold text-center lg:text-left"> Why Choose LuxoArch? </h2><ul class="text-white text-lg mt-4 space-y-3"><li class="flex items-start"><span class="text-yellow-500 mr-2">✔</span> <strong>Creative Excellence:</strong> Unique &amp; personalized home designs.</li><li class="flex items-start"><span class="text-yellow-500 mr-2">✔</span> <strong>Residential Expertise:</strong> Specialized in crafting dream homes.</li><li class="flex items-start"><span class="text-yellow-500 mr-2">✔</span> <strong>Attention to Detail:</strong> Every design is a masterpiece.</li><li class="flex items-start"><span class="text-yellow-500 mr-2">✔</span> <strong>Clear Communication:</strong> Keeping you engaged throughout.</li><li class="flex items-start"><span class="text-yellow-500 mr-2">✔</span> <strong>Timely Delivery:</strong> We ensure on-time project completion.</li></ul></div></div></div><div class="w-full flex flex-col lg:flex-row items-center justify-center mt-20 gap-12"><img class="w-[90%] lg:w-[45%] h-auto rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300"${ssrRenderAttr("src", _imports_2)} alt="about"><div class="bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-700 w-[90%] lg:w-[50%] text-center lg:text-left"><span class="text-yellow-500 uppercase font-semibold text-lg">Explore</span><h1 class="text-4xl text-white font-bold">Our Creations</h1><p class="text-lg text-gray-300 mt-4"> Take a look at our projects to see the diverse range of designs we have successfully completed. </p><div class="mt-6">`);
+  _push(ssrRenderComponent(_component_RouterLink, {
+    to: "/allprojects",
+    class: "bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-lg transition-all shadow-lg transform hover:scale-105"
+  }, {
+    default: withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(` Explore `);
+      } else {
+        return [
+          createTextVNode(" Explore ")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</div></div></div></div>`);
+}
 const _sfc_setup$r = _sfc_main$r.setup;
 _sfc_main$r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("src/views/AboutView.vue");
   return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
 };
+const AboutView = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["ssrRender", _sfc_ssrRender$2]]);
 const _sfc_main$q = {};
 function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
   _push(`<div${ssrRenderAttrs(mergeProps({ class: "h-screen w-full flex justify-center items-center" }, _attrs))}><span class="loading loading-bars loading-lg text-primary"></span></div>`);
@@ -591,28 +571,34 @@ const _sfc_main$o = {
   setup(__props) {
     const services = ref([]);
     const isLoading = ref(true);
-    onMounted(async (e) => {
+    const serviceIcons = {
+      "Initial Consultation": "/icons/consultation.svg",
+      "Residential Architectural Design": "/icons/architecture.svg",
+      "Planning Approvals (DA/CDC Approvals)": "/icons/approval.svg",
+      "Collaboration with Consultants": "/icons/collaboration.svg",
+      "Alterations & Extensions Design & Approval": "/icons/alterations.svg",
+      "Granny Flat Design & Swimming Pool Approval": "/icons/pool.svg"
+    };
+    onMounted(async () => {
       const fileUrl = "https://luxoarch.github.io/assets/services.csv";
       const res = await fetch(fileUrl);
       const data = await res.text();
       const parsed = papaparse.parse(data, { header: true });
-      services.value = parsed.data;
+      services.value = parsed.data.filter((service) => service.service).map((service) => ({
+        ...service,
+        icon: service.icon || serviceIcons[service.service] || "/icons/default.svg"
+        // Fallback icon
+      }));
       isLoading.value = false;
     });
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<section${ssrRenderAttrs(mergeProps({ class: "py-12 bg-[var(--bg-color)] text-gray-100 pt-24" }, _attrs))}><div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8"><div class="max-w-xl mx-auto text-center xl:max-w-2xl"><h2 class="text-3xl font-bold leading-tight text-gray-50 sm:text-4xl xl:text-5xl mb-6">What we Offer? </h2><p class="mb-4">We are provide complete solution on design and architecture that helps you be more productive and efficient when building your dream.</p></div>`);
+      _push(`<section${ssrRenderAttrs(mergeProps({ class: "py-20 bg-[#171411] text-gray-100" }, _attrs))}><div class="container mx-auto px-6 lg:px-16"><div class="text-center mb-12"><h2 class="text-4xl font-bold text-white sm:text-5xl">What We Offer?</h2><p class="mt-4 text-lg text-gray-300 max-w-3xl mx-auto"> We provide a complete solution for design and architecture, making your home-building experience smooth and efficient. </p></div>`);
       if (isLoading.value) {
         _push(ssrRenderComponent(Loading, null, null, _parent));
       } else {
-        _push(`<div class="grid max-w-4xl lg:max-w-6xl grid-cols-1 mx-auto mt-8 text-center gap-y-4 sm:gap-x-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-12 lg:mt-20 sm:text-left"><!--[-->`);
+        _push(`<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"><!--[-->`);
         ssrRenderList(services.value, (service) => {
-          _push(`<div class="relative">`);
-          if (service.service) {
-            _push(`<!--[--><div class="absolute -inset-1"><div class="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-yellow-400 via-pink-500 to-green-600"></div></div><div class="relative overflow-hidden bg-white shadow-md rounded-xl h-full"><div class="p-9"><img class="w-12 h-12 mx-auto text-gray-400 sm:mx-0"${ssrRenderAttr("src", service.icon)} alt="icon"><h3 class="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">${ssrInterpolate(service.service)}</h3><p class="mt-6 text-base text-gray-600">${ssrInterpolate(service.description)}</p></div></div><!--]-->`);
-          } else {
-            _push(`<!---->`);
-          }
-          _push(`</div>`);
+          _push(`<div class="relative bg-white rounded-xl shadow-lg p-8 transition-all duration-300 group overflow-hidden hover:shadow-2xl"><div class="absolute inset-0 bg-gradient-to-r from-yellow-500/20 via-pink-500/20 to-green-500/20 opacity-0 group-hover:opacity-80 transition-opacity duration-300 z-0"></div><div class="relative z-10 flex flex-col items-center text-center space-y-4"><img${ssrRenderAttr("src", service.icon)} alt="service-icon" class="w-14 h-14 object-contain"><h3 class="text-2xl font-bold text-gray-900">${ssrInterpolate(service.service)}</h3><p class="text-base text-gray-600 leading-relaxed">${ssrInterpolate(service.description)}</p></div></div>`);
         });
         _push(`<!--]--></div>`);
       }
@@ -659,7 +645,7 @@ const _sfc_main$m = {
   setup(__props) {
     const isSending = ref(false);
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<section${ssrRenderAttrs(mergeProps({ class: "text-gray-400 bg-[var(--bg-color)] body-font relative" }, _attrs))}><div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap"><div class="lg:w-2/3 md:w-1/2 bg-[var(--bg-color)] rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative"><iframe width="100%" height="100%" title="map" class="absolute inset-0" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.777326569421!2d151.0344867748133!3d-33.92113012176962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12bd588a283095%3A0x76720e4cb927cff8!2sLuxoarch%20Design%20%26%20Studio!5e0!3m2!1sen!2sbd!4v1735184927575!5m2!1sen!2sbd" style="${ssrRenderStyle({ "filter": "grayscale(1) contrast(1.2) opacity(0.16)" })}"></iframe><div class="bg-[var(--bg-color)] relative flex flex-wrap py-6 rounded shadow-md"><div class="lg:w-1/2 px-6"><h2 class="title-font font-semibold text-white tracking-widest text-xs">ADDRESS</h2><p class="mt-1">12 Gratwick Mews, Edmondson Park, NSW 2174, Australia</p></div><div class="lg:w-1/2 px-6 mt-4 lg:mt-0"><h2 class="title-font font-semibold text-white tracking-widest text-xs">EMAIL</h2><a href="mailto:info@luxoarch.com.au" class="text-yellow-400 leading-relaxed">info@luxoarch.com.au</a><h2 class="title-font font-semibold text-white tracking-widest text-xs mt-4">PHONE</h2><a class="leading-relaxed" href="tel:0426235095">0426 235 095</a></div></div></div><form class="lg:w-1/3 md:w-1/2 flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0"><h2 class="text-white text-lg mb-1 font-medium title-font">Get in touch.</h2><p class="leading-relaxed mb-5">To discuss your next project, reach out to us via email or phone to chat</p><div class="relative mb-4"><label for="name" class="leading-7 text-sm text-gray-400">Name</label><input required type="text" id="name" name="name" placeholder="Enter your Name" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></div><div class="relative mb-4"><label for="name" class="leading-7 text-sm text-gray-400">Phone</label><input required type="tel" id="phone" name="phone" placeholder="Enter your Phone" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></div><div class="relative mb-4"><label for="email" class="leading-7 text-sm text-gray-400">Email</label><input required type="email" id="email" name="email" placeholder="Enter your Email" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></div><div class="relative mb-4"><label for="message" class="leading-7 text-sm text-gray-400">Message</label><textarea required id="message" name="message" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out" placeholder="Describe Project details, services etc"></textarea></div><button type="submit"${ssrIncludeBooleanAttr(isSending.value) ? " disabled" : ""} class="text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded text-lg disabled:grayscale disabled:cursor-wait">Submit</button><p class="text-xs text-gray-400 text-opacity-90 mt-3">Complete the enquiry form and a member of our team will be in touch as soon as possible.</p></form></div></section>`);
+      _push(`<section${ssrRenderAttrs(mergeProps({ class: "text-gray-400 body-font relative" }, _attrs))}><div class="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap"><div class="lg:w-2/3 md:w-1/2 bg-[#171411] rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative"><iframe width="100%" height="100%" title="map" class="absolute inset-0" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.777326569421!2d151.0344867748133!3d-33.92113012176962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12bd588a283095%3A0x76720e4cb927cff8!2sLuxoarch%20Design%20%26%20Studio!5e0!3m2!1sen!2sbd!4v1735184927575!5m2!1sen!2sbd" style="${ssrRenderStyle({ "filter": "grayscale(1) contrast(1.2) opacity(0.16)" })}"></iframe><div class="bg-[#171411] relative flex flex-wrap py-6 rounded shadow-md"><div class="lg:w-1/2 px-6"><h2 class="title-font font-semibold text-white tracking-widest text-xs">ADDRESS</h2><p class="mt-1">12 Gratwick Mews, Edmondson Park, NSW 2174, Australia</p></div><div class="lg:w-1/2 px-6 mt-4 lg:mt-0"><h2 class="title-font font-semibold text-white tracking-widest text-xs">EMAIL</h2><a href="mailto:info@luxoarch.com.au" class="text-yellow-400 leading-relaxed">info@luxoarch.com.au</a><h2 class="title-font font-semibold text-white tracking-widest text-xs mt-4">PHONE</h2><a class="leading-relaxed" href="tel:0426235095">0426 235 095</a></div></div></div><form class="lg:w-1/3 md:w-1/2 flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0"><h2 class="text-white text-lg mb-1 font-medium title-font">Get in touch.</h2><p class="leading-relaxed mb-5">To discuss your next project, reach out to us via email or phone to chat.</p><div class="relative mb-4"><label for="name" class="leading-7 text-sm text-gray-400">Name</label><input required type="text" id="name" name="name" placeholder="Enter your Name" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></div><div class="relative mb-4"><label for="phone" class="leading-7 text-sm text-gray-400">Phone</label><input required type="tel" id="phone" name="phone" placeholder="Enter your Phone" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></div><div class="relative mb-4"><label for="email" class="leading-7 text-sm text-gray-400">Email</label><input required type="email" id="email" name="email" placeholder="Enter your Email" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></div><div class="relative mb-4"><label for="message" class="leading-7 text-sm text-gray-400">Message</label><textarea required id="message" name="message" placeholder="Describe project details, services, etc." class="w-full bg-gray-800 rounded border border-gray-700 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea></div><button type="submit"${ssrIncludeBooleanAttr(isSending.value) ? " disabled" : ""} class="text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded text-lg disabled:grayscale disabled:cursor-wait"> Submit </button><p class="text-xs text-gray-400 text-opacity-90 mt-3"> Complete the enquiry form and a member of our team will be in touch as soon as possible. </p></form></div></section>`);
     };
   }
 };
@@ -676,7 +662,7 @@ const _sfc_main$l = /* @__PURE__ */ defineComponent({
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
       _push(ssrRenderComponent(HomeView, null, null, _parent));
-      _push(ssrRenderComponent(_sfc_main$r, null, null, _parent));
+      _push(ssrRenderComponent(AboutView, null, null, _parent));
       _push(ssrRenderComponent(_sfc_main$n, null, null, _parent));
       _push(ssrRenderComponent(_sfc_main$p, null, null, _parent));
       _push(ssrRenderComponent(_sfc_main$m, null, null, _parent));
@@ -708,7 +694,7 @@ const _sfc_main$k = {
           _push(`<div>`);
           if (project.title) {
             _push(`<div className="card bg-transparent max-w-96 mx-auto bg-base-100 shadow-lg shadow-gray-900"><figure className="px-10 pt-10">`);
-            _push(ssrRenderComponent(_sfc_main$x, {
+            _push(ssrRenderComponent(_sfc_main$w, {
               banners: project.banners
             }, null, _parent));
             _push(`</figure>`);
@@ -844,19 +830,19 @@ const _sfc_main$g = {
       _push(ssrRenderComponent(_component_ClientOnly, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(Navigation, null, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_sfc_main$y, null, null, _parent2, _scopeId));
             _push2(ssrRenderComponent(Modal, null, {
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 var _a, _b;
                 if (_push3) {
                   if ((_a = currentModalContentComponent.value) == null ? void 0 : _a.title) {
-                    _push3(ssrRenderComponent(_sfc_main$w, { data: currentModalContentComponent.value }, null, _parent3, _scopeId2));
+                    _push3(ssrRenderComponent(_sfc_main$v, { data: currentModalContentComponent.value }, null, _parent3, _scopeId2));
                   } else {
                     _push3(`<!---->`);
                   }
                 } else {
                   return [
-                    ((_b = currentModalContentComponent.value) == null ? void 0 : _b.title) ? (openBlock(), createBlock(_sfc_main$w, {
+                    ((_b = currentModalContentComponent.value) == null ? void 0 : _b.title) ? (openBlock(), createBlock(_sfc_main$v, {
                       key: 0,
                       data: currentModalContentComponent.value
                     }, null, 8, ["data"])) : createCommentVNode("", true)
@@ -867,12 +853,12 @@ const _sfc_main$g = {
             }, _parent2, _scopeId));
           } else {
             return [
-              createVNode(Navigation),
+              createVNode(_sfc_main$y),
               createVNode(Modal, null, {
                 default: withCtx(() => {
                   var _a;
                   return [
-                    ((_a = currentModalContentComponent.value) == null ? void 0 : _a.title) ? (openBlock(), createBlock(_sfc_main$w, {
+                    ((_a = currentModalContentComponent.value) == null ? void 0 : _a.title) ? (openBlock(), createBlock(_sfc_main$v, {
                       key: 0,
                       data: currentModalContentComponent.value
                     }, null, 8, ["data"])) : createCommentVNode("", true)
@@ -1518,7 +1504,7 @@ const _sfc_main = {
     return (_ctx, _push, _parent, _attrs) => {
       if (!unref(isLoading)) {
         _push(`<div${ssrRenderAttrs(mergeProps({ class: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 text-neutral-content" }, _attrs))}><div class="max-w-3xl mx-auto"><div class="py-8"><h1 class="text-3xl font-bold mb-2">${ssrInterpolate(unref(project).title)}</h1><p class="text-gray-500 text-sm">${ssrInterpolate(unref(project).description)}</p></div>`);
-        _push(ssrRenderComponent(_sfc_main$x, {
+        _push(ssrRenderComponent(_sfc_main$w, {
           banners: unref(project).banners
         }, null, _parent));
         _push(`<div ass="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto">${unref(project).content ?? ""}</div><br></div></div>`);
@@ -1543,7 +1529,7 @@ const mainRoutes = [
   {
     path: "/about",
     name: "about",
-    component: _sfc_main$r
+    component: AboutView
   },
   {
     path: "/projects",
@@ -1621,7 +1607,7 @@ const routes = [
     component: _sfc_main$2
   }
 ];
-const createApp = ViteSSG(_sfc_main$u, { routes, scrollBehavior(to, from, savedPosition) {
+const createApp = ViteSSG(_sfc_main$t, { routes, scrollBehavior(to, from, savedPosition) {
   if (savedPosition) {
     return savedPosition;
   } else if (to.hash) {
